@@ -42,24 +42,23 @@ def scroll_to_bottom(driver: webdriver.Firefox) -> list:
         driver.find_elements(By.CLASS_NAME, 'gallery-item-content')
     ]
 
-def write_to_disk(dir, n):
+def write_to_disk(dir):
     if not os.path.exists(dir):
         os.makedirs(dir) 
-    i = n
+    
     def save(img_src):
-        nonlocal i
-        start, end = img_src.find('https'), img_src.find('v1')
-        response = requests.get(url=img_src[start:end-1], stream=True)
+        
         name = img_src.split('/')[-1]
-        name = name.replace('~mv2', '')
-        # # print(name)
-        with open(dir + str(i).zfill(5) + '_' + name, 'wb') as f:
+        
+        with open(dir + name, 'wb') as f:
+
+            response = requests.get(
+                url=img_src[img_src.find('https'):img_src.find('v1')-1], 
+                stream=True)
+            
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
-                    f.write(chunk)
-                    response
-        i -= 1
-        
+                    f.write(chunk)     
 
     return save 
 
