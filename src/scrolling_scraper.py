@@ -68,6 +68,6 @@ if __name__=="__main__":
     with start_webdriver(sys.argv[1]) as driver:
         t = scroll_to_bottom(driver)
         t.reverse()
-        save = write_to_disk('./out/', len(t))
+        save = write_to_disk('./out/')
         for x in t:
             save(x)
