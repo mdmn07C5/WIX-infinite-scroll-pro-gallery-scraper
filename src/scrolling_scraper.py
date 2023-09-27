@@ -9,14 +9,14 @@ from time import sleep
 def start_webdriver(url:str) -> webdriver:
     op = webdriver.FirefoxOptions()
     # do not open browser to air out dirty laundry
-    op.add_argument('--headless')  
+    op.add_argument('--headless')
     # spoof agent to allow crawling on website
-    op.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0)') 
+    op.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0)')
 
     driver = webdriver.Firefox(options=op)
     driver.get(url)
     return driver
-    
+
 
 def scroll_to_bottom(driver: webdriver.Firefox) -> list:
 
@@ -29,7 +29,7 @@ def scroll_to_bottom(driver: webdriver.Firefox) -> list:
             'window.scrollTo(0, window.pageYOffset + window.innerHeight);')
 
         print(f'scrolling... current height: {page_height}')
-        
+                
         # allow webpage to load a few, this also prevents us from scrolling again
         # and reaching the same height because nothing was loaded
         sleep(1.5)
@@ -66,8 +66,7 @@ def write_to_disk(dir):
 if __name__=="__main__":
     import sys
     with start_webdriver(sys.argv[1]) as driver:
-        t = scroll_to_bottom(driver)
-        t.reverse()
-        save = write_to_disk('./out/', len(t))
+        t = scroll_to_bottom(driver=driver)
+        save = write_to_disk('./out/')
         for x in t:
             save(x)
