@@ -30,6 +30,8 @@ def scroll_to_bottom(driver: webdriver.Firefox) -> list:
 
         print(f'scrolling... current height: {page_height}')
         
+        
+
         # allow webpage to load a few, this also prevents us from scrolling again
         # and reaching the same height because nothing was loaded
         sleep(1.5)
@@ -46,9 +48,12 @@ def write_to_disk(dir):
     if not os.path.exists(dir):
         os.makedirs(dir) 
     
+    dir_contents = set(os.listdir(dir))
+
     def save(img_src):
         
-        name = img_src.split('/')[-1]
+        if (name := img_src.split('/')[-1]) in dir_contents:
+            return
         
         with open(dir + name, 'wb') as f:
 
