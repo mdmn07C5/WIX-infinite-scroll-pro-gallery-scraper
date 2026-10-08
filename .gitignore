@@ -5,6 +5,9 @@
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
+# bullshit artifacts I might have
+.cbz
+
 # Local History for Visual Studio Code
 .history/
 
